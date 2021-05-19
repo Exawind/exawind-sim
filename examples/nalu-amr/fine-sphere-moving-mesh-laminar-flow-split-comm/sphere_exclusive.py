@@ -29,7 +29,7 @@ def create_subcomm(comm, num_ranks, start_rank=0):
     if (start_rank + num_ranks) > mpi_size:
         raise ValueError("Number of MPI ranks requested for Nalu-Wind greater than available ranks: MPI size = %d; Num ranks requested = "%(mpi_size, num_ranks))
     group = comm.Get_group()
-    sub_group = group.Range_incl([(start_rank, num_ranks-1, 1),])
+    sub_group = group.Range_incl([(start_rank,start_rank+num_ranks-1, 1),])
     subcomm = comm.Create(sub_group)
     return subcomm
 
@@ -54,7 +54,7 @@ def main():
         sim.register_solver(awind)
 
     sim.printer.echo("Initializing Nalu-Wind on %d MPI ranks"%num_nalu_ranks)
-    nalu_comm = create_sub_comm(num_nalu_ranks, start_rank=num_amr_ranks)
+    nalu_comm = create_subcomm(comm, num_nalu_ranks, start_rank=num_amr_ranks)
     if nalu_comm != MPI.COMM_NULL:
         nalu = nw.NaluWind(nalu_comm, "sphere-nalu.yaml", sim.tioga)
         sim.register_solver(nalu)
