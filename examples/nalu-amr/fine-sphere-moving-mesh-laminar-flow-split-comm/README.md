@@ -39,7 +39,7 @@ cp -R fine-sphere-moving-mesh-laminar-flow-split-comm /scratch/${USER}/
 cd /scratch/${USER}/fine-sphere-moving-mesh-laminar-flow-split-comm
 
 # Create symlink to mesh file
-ln -s /projects/hfm/ashesh/sphere_w_amr/sphere.exo
+ln -s /projects/hfm/ashesh/meshes/sphere.exo
 
 # Execute the overlapping example
 mpiexec -np 72 python3 sphere_overlapping.py

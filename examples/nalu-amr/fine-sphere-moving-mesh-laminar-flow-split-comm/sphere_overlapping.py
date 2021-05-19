@@ -48,7 +48,7 @@ def main():
     num_nalu_ranks = 8
 
     sim.printer.echo("Initializing Nalu-Wind on %d MPI ranks"%num_nalu_ranks)
-    nalu_comm = create_nalu_comm(num_nalu_ranks)
+    nalu_comm = create_nalu_comm(comm,num_nalu_ranks)
     if nalu_comm != MPI.COMM_NULL:
         nalu = nw.NaluWind(nalu_comm, "sphere-nalu.yaml", sim.tioga)
         sim.register_solver(nalu)
